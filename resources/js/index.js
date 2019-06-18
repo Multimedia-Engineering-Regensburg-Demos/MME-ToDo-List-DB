@@ -1,12 +1,26 @@
 /*eslint-env browser */
 
 import Logger from "./utils/Logger.js";
+import DBManager from "./db/DBManager.js";
 import TaskController from "./task/TaskController.js";
 
 function init() {
   Logger.enable();
-  // TODO: Create or open DB and get all tasks
-  // TODO: Init TaskController with available tasks
+  initDatabase().then(initTaskController).catch(function(error) {
+    Logger.log(error);
+  });
+}
+
+function initDatabase() {
+  return new Promise(function(resolve, reject) {
+    DBManager.open(true).then(function() {
+      DBManager.getTasks().then(function(result) {
+        resolve(result);
+      });
+    }).catch(function(error) {
+      reject(error);
+    });
+  });
 }
 
 function initTaskController(tasks) {

@@ -37,7 +37,6 @@ class TaskController extends Observable {
     clearListButton.addEventListener("click", onListCleanupRequested.bind(this));
   }
 
-  // Displays task (as TaskView) in UI
   add(task) {
     let view = new TaskView(task);
     taskViews.push(view);
@@ -47,7 +46,6 @@ class TaskController extends Observable {
     view.setFocus();
   }
 
-  // Removes task (respectively its TaskView) from UI
   remove(task) {
     for (let i = 0; i < taskViews.length; i++) {
       let currentView = taskViews[i];
