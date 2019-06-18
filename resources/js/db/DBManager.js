@@ -4,8 +4,7 @@ import Logger from "../utils/Logger.js";
 import Config from "./DBConfig.js";
 import Task from "../task/Task.js";
 
-var database,
-  debugModeEnabled;
+var database;
 
 function getObjectStore(mode) {
   let transaction = database.transaction([Config.DB_STORE_KEY], mode),
@@ -107,8 +106,7 @@ function removeTaskFromDatabase(task) {
 
 class DBManager {
 
-  open(debug) {
-    debugModeEnabled = debug;
+  open() {
     return createDatabase();
   }
 
