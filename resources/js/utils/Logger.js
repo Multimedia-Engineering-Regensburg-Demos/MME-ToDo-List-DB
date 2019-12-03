@@ -25,7 +25,9 @@ class Logger {
       return;
     }
     time = getFormatedTime(new Date());
+    /* eslint-disable */
     console.log(`${time}\t${msg}`);
+    /* eslint-enable */
   }
 
 }
