@@ -1,8 +1,9 @@
 /* eslint-env browser */
 
 import Logger from "../utils/Logger.js";
-import Config from "./DBConfig.js";
 import Task from "../task/Task.js";
+import Config from "./DBConfig.js";
+import DBProvider from "./DBProvider.js";
 
 var database;
 
@@ -104,7 +105,7 @@ function removeTaskFromDatabase(task) {
   });
 }
 
-class DBManager {
+class IndexedDBManager extends DBProvider {
 
   open() {
     return createDatabase();
@@ -129,4 +130,4 @@ class DBManager {
 
 }
 
-export default new DBManager();
+export default IndexedDBManager;

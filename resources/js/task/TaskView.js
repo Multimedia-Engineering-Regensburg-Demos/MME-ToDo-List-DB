@@ -1,14 +1,11 @@
-/* eslint-env browser */
-
 import { Event, Observable } from "../utils/Observable.js";
 
 const TASK_VIEW_TEMPLATE_STRING = document.querySelector("#task-template").innerHTML
   .trim();
 
-function createTaskElement() {
-  let el = document.createElement("div");
-  el.innerHTML = TASK_VIEW_TEMPLATE_STRING;
-  return el.firstChild;
+function broadCastUpdateEvent(context) {
+  let event = new Event("taskViewStatusChange", context.task);
+  context.notifyAll(event);
 }
 
 class TaskView extends Observable {
@@ -16,11 +13,8 @@ class TaskView extends Observable {
   constructor(task) {
     super();
     this.task = task;
-    this.el = createTaskElement();
+    this.el = TaskView.createTaskElement();
     this.el.setAttribute("data-id", this.task.id);
-    if (task.completed === true) {
-      this.el.classList.add("finished");
-    }
     this.statusCheckbox = this.el.querySelector(".task-status-checkbox");
     this.statusCheckbox.checked = this.task.completed;
     this.statusCheckbox.addEventListener("change", this.onCheckboxStatusChanged
@@ -35,15 +29,10 @@ class TaskView extends Observable {
     this.textInput.addEventListener("blur", this.onTextFocusChanged.bind(this));
   }
 
-  setFocus() {
-    this.textInput.focus();
-    this.textInput.select();
-  }
-
   getElement() {
     return this.el;
   }
-
+  
   removeElement() {
     this.el.parentElement.removeChild(this.el);
   }
@@ -57,17 +46,15 @@ class TaskView extends Observable {
   }
 
   onCheckboxStatusChanged() {
-    let event = new Event("taskViewStatusChange", this);
     this.task.toggleStatus();
     this.el.classList.toggle("finished");
     this.textInput.disabled = !this.textInput.disabled;
-    this.notifyAll(event);
+    broadCastUpdateEvent(this);
   }
 
-  onTextContentChanged() {
-    let event = new Event("taskViewTextChange", this);
-    this.task.setDescription(this.textInput.value);
-    this.notifyAll(event);
+  onTextContentChanged(event) {
+    this.task.setDescription(event.target.value);
+    broadCastUpdateEvent(this);
   }
 
   onKeyPressed(event) {
@@ -78,6 +65,17 @@ class TaskView extends Observable {
 
   onTextFocusChanged() {
     this.el.classList.toggle("edit");
+  }
+
+  focus() {
+    this.textInput.focus();
+    this.textInput.select();
+  }
+
+  static createTaskElement() {
+    let el = document.createElement("div");
+    el.innerHTML = TASK_VIEW_TEMPLATE_STRING;
+    return el.firstChild;
   }
 
 }

@@ -1,11 +1,13 @@
 /* eslint-env browser */
 
+const DEFAULT_TASK_TEXT = "New Task";
+
 class Task {
 
-  constructor(description, id, completed) {
-    this.description = description || "New Task";
-    this.id = id || Date.now().toString();
-    this.completed = completed || false;
+  constructor(description = DEFAULT_TASK_TEXT, id = Date.now().toString(), completed = false) {
+    this.description = description;
+    this.id = id;
+    this.completed = completed;
   }
 
   setDescription(description) {

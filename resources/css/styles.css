@@ -2,83 +2,84 @@ html, body {
 	font-family: "Trebuchet MS", Helvetica, sans-serif;
 	margin: 0;
 	padding: 0;
-	background: #e0e0e2;
+	background: #FAFAFA;
 }
 
-header {
-	width: 98vw;
-	height: 7vh;
-	padding: 0 1vw;
-	line-height: 7vh;
-	background: #2b4162;
-	font-size: 4vh;
+#content {
+	position: relative;
+	width: 50vw;
+	height: 70vh;
+	margin: 5vh auto;
+	border-radius: 0.5vh;
+	background: #FFF;
+}
+
+#content h1 {
+	margin: 0;
+	border-radius: 0.5vh 0.5vh 0 0;
+	padding: 2vh;
+	font-size: 2vh;
+	line-height: 2vh;
 	color: #FFFFFF;
-}
-
-header h1 {
+	background: #3f88c5;
 }
 
 #menu {
+	display: flex;
+	bottom: 2.5vh;
+	width: 45vw;
+	height: 5vh;
+	margin: 0 2.5vw;
 	position: absolute;
-	bottom: 5vh;
-	right: 5vh;
+	justify-content: flex-end;
 }
 
 
 .button {
-	float: left;
-	margin: 1vh;
-	width: 7vh;
-	height: 7vh;
+	width: 5vh;
+	height: 5vh;
+	margin: 0.5vh;
+	padding: 0;
 	border-radius: 50%;
-	background-color: #2b4162;
-	font-size: 5vh;
-	line-height: 7vh;
+	font-size: 3vh;
+	line-height: 5vh;
 	text-align: center;
-	color: #FFF;
+	color: #FFFFFF;
 }
 
 .button:hover {
 	cursor: pointer;
-	opacity: 0.7;
+	opacity: 0.5;
 }
 
-.button.new-task:after {
-	display: block;
-	content: "\002B";
-	
+.button.new-task {
+	background-color: #44bba4;
 }
 
-.button.clear-list:after {
-	display: block;
-	content: "\1F5D1";
+.button.clear-list {
+	background-color: #e94f37;
 }
 
 #tasks {
 	margin: 0;
 	padding: 0;
-	width: 100vw;
+	width: 50vw;
 }
 
 .task-list {
 	margin: 0;
 	padding: 0;
-	width: 100vw;
-	height: 90vh;
+	width: 50vw;
 	list-style-type: none;
-	overflow-y: auto;
-	overflow-x: hidden;
 }
 
 .task {
 	display: flex;
 	height: 50px;
-	width: 100vw;
+	width: 50vw;
+	margin: 1vh 0;
 	align-items: center;
-	background-color: #faa753;
-	border-style: solid;
-	border-width: 1px 0;
-	border-color: #e0e0e2;
+	background-color: #ebf3f9;
 }
 
 .task.finished {
@@ -94,16 +95,15 @@ header h1 {
 	height: 20px;
 	width: 20px;
 	background-color: #FFFFFF;
-	border: 2px solid #2b4162;
+	border: 2px solid #393e41;
 }
 
 .task-status-checkbox:hover {
 	cursor: pointer;
-	background-color: #2b4162;
 }
 
 .task-status-checkbox:checked {
-	background-color: #2b4162;
+	background-color: #393e41;
 }
 
 .task-text-input {
@@ -112,9 +112,9 @@ header h1 {
 	flex-grow: 2;
 	height: 30px;
 	border-width: 0px;
-	border-color: #FFFFFF;
+	border-color: #000;
 	background-color: transparent;
-	color: #FFFFFF;
+	color: #000;
 	font-size: 20px;
 	line-height: 40px;
 
