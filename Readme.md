@@ -6,4 +6,3 @@ Informationen und eine Anleitung zur Implementierung der Demo finden Sie [hier](
 
 - [Starter-Paket (zip-Datei)](https://github.com/Multimedia-Engineering-Regensburg-Demos/MME-ToDo-List-DB/archive/starter.zip)
 - [Lösungsvorschlag (zip-Datei)](https://github.com/Multimedia-Engineering-Regensburg-Demos/MME-ToDo-List-DB/archive/master.zip)
-- [Kommentare (zip-Datei)](https://github.com/Multimedia-Engineering-Regensburg-Demos/MME-ToDo-List-DB/archive/comments.zip)
