@@ -3,7 +3,7 @@
 class DBProvider {
 
   /*
-   * Must eturn promise which resolves when database is ready
+   * Must return promise which resolves when database is ready
    */
   open() {
     throw new Error("Not implemented");

@@ -1,10 +1,13 @@
 /* eslint-env browser */
 
+import LocalStorageDBProvider from "./LocalStorageDBProvider.js";
 import IndexedDBProvider from "./IndexedDBProvider.js";
 import Task from "../task/Task.js";
 
 function getProvider(strategy) {
   switch (strategy) {
+    case DBConnector.LOCAL_STORAGE_STRATEGY:
+      return new LocalStorageDBProvider();
     case DBConnector.INDEXED_DB_STRATEGY:
       return new IndexedDBProvider();
     default:
@@ -42,6 +45,6 @@ class DBConnector {
 }
 
 DBConnector.INDEXED_DB_STRATEGY = Symbol("IndexedDB");
-DBConnector.LOCALSTORAGE_STRATEGY = Symbol("LocalStorage");
+DBConnector.LOCAL_STORAGE_STRATEGY = Symbol("LocalStorage");
 
 export default DBConnector;

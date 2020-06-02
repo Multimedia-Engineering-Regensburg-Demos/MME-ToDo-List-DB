@@ -19,7 +19,6 @@ function initDatabase() {
   return new Promise(function(resolve, reject) {
     db.open(true).then(function() {
       db.getTasks().then(function(result) {
-
         resolve(result);
       });
     }).catch(function(error) {   
