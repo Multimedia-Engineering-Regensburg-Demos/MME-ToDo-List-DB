@@ -62,42 +62,30 @@ function removeTaskFromDB(taskToBeRemoved) {
     return removedTask;
 }
 
-
 class LocalStorageDBProvider extends DBProvider {
 
-    open() {
-        return new Promise(function (resolve, reject) {
-            loadLiveDataFromStorage();
-            resolve();
-        });
+    async open() {
+        loadLiveDataFromStorage();
     }
 
-    createTask() {
-        return new Promise(function (resolve, reject) {
-            let newTask = new Task();
-            storeTask(newTask);
-            resolve(newTask);
-        });
+    async createTask() {
+        let newTask = new Task();
+        storeTask(newTask);
+        return newTask;
     }
 
-    getTasks() {
-        return new Promise(function (resolve, reject) {
-            resolve(liveData);
-        });
+    async getTasks() {
+        return liveData;
     }
 
-    updateTask(task) {
-        return new Promise(function (resolve, reject) {
-            let updatedTask = updateTaskInDB(task);
-            resolve(updatedTask);
-        });
+    async updateTask(task) {
+        let updatedTask = updateTaskInDB(task);
+        return updatedTask;
     }
 
-    removeTask(task) {
-        return new Promise(function (resolve, reject) {
-            let removedTask = removeTaskFromDB(task);
-            resolve(removedTask);
-        });
+    async removeTask(task) {
+        let removedTask = removeTaskFromDB(task);
+        return removedTask;
     }
 
 }
