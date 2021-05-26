@@ -5,35 +5,35 @@ class DBProvider {
     /*
      * Must return promise which resolves when database is ready
      */
-    open() {
+    async open() {
         throw new Error("Not implemented");
     }
 
     /*
      * Must return promise which resolves with new task when that task was created and stored in database 
      */
-    createTask() {
+    async createTask() {
         throw new Error("Not implemented");
     }
 
     /*
      * Must return promise which resolves when with all available tasks
      */
-    getTasks() {
+    async getTasks() {
         throw new Error("Not implemented");
     }
 
     /*
      * Must return promise which resolves with updated task when given task was updated in database
      */
-    updateTask(task) {
+    async updateTask(task) {
         throw new Error("Not implemented");
     }
 
     /*
      * Must return promise which resolves with removed task when that task was removed from database
      */
-    removeTask(task) {
+    async removeTask(task) {
         throw new Error("Not implemented");
     }
 
