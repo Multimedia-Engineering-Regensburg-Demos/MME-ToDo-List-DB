@@ -1,5 +1,3 @@
-/* eslint-env browser */
-
 const DEFAULT_TASK_TEXT = "New Task";
 
 class Task {

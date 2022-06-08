@@ -1,5 +1,3 @@
-/*eslint-env browser */
-
 import Logger from "./utils/Logger.js";
 import TaskList from "./task/TaskList.js";
 import DBConnector from "./db/DBConnector.js";

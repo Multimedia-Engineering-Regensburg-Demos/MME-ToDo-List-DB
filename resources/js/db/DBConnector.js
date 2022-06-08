@@ -1,5 +1,3 @@
-/* eslint-env browser */
-
 import LocalStorageDBProvider from "./LocalStorageDBProvider.js";
 import IndexedDBProvider from "./IndexedDBProvider.js";
 import Task from "../task/Task.js";

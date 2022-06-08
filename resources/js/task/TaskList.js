@@ -1,5 +1,3 @@
-/* eslint-env browser */
-
 import TaskView from "./TaskView.js";
 import { Event, Observable } from "../utils/Observable.js";
 

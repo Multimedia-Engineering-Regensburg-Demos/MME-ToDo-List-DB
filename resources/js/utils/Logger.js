@@ -1,8 +1,8 @@
-/* eslint-env browser*/
+/* eslint-disable no-magic-numbers, no-console */
 
-var enabled = false;
+let enabled = false;
 
-function getFormatedTime(date) {
+function getFormattedTime(date) {
     let hours, minutes;
     hours = (date.getHours() < 10 ? "0" : "") + date.getHours();
     minutes = (date.getMinutes() < 10 ? "0" : "") + date.getHours();
@@ -24,7 +24,7 @@ class Logger {
         if (enabled === false) {
             return;
         }
-        time = getFormatedTime(new Date());
+        time = getFormattedTime(new Date());
         console.log(`${time}\t${msg}`);
     }
 
