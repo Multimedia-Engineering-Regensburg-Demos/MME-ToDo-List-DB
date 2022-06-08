@@ -5,24 +5,21 @@ import DBConnector from "./db/DBConnector.js";
 var db,
     taskList;
 
-function init() {
+async function init() {
     Logger.enable();
-    initDatabase().then(initUI).catch(function(error) {
+    try {
+        await initDatabase(DBConnector.INDEXED_DB_STRATEGY);
+        let tasks = await db.getTasks();
+        initUI(tasks);
+    } catch (error) {
         Logger.log(error);
-    });
+    }
 }
 
-function initDatabase() {
-    db = new DBConnector(DBConnector.INDEXED_DB_STRATEGY);
-    return new Promise(function(resolve, reject) {
-        db.open(true).then(function() {
-            db.getTasks().then(function(result) {
-                resolve(result);
-            });
-        }).catch(function(error) {
-            reject(error);
-        });
-    });
+async function initDatabase(strategy) {
+    db = new DBConnector(strategy);
+    await db.open(true);
+    return true;
 }
 
 function initUI(tasks) {
