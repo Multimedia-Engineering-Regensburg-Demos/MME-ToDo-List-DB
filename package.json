@@ -12,12 +12,5 @@
         "url": "git+https://github.com/Multimedia-Engineering-Regensburg-Demos/MME-ToDo-List-DB.git"
     },
     "author": "Alexander Bazo <alexander.bazo@ur.de>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/Multimedia-Engineering-Regensburg-Demos/MME-ToDo-List-DB/issues"
-    },
-    "homepage": "https://github.com/Multimedia-Engineering-Regensburg-Demos/MME-ToDo-List-DB#readme",
-    "dependencies": {
-        "http-server": "^0.12.3"
-    }
+    "license": "MIT"
 }
