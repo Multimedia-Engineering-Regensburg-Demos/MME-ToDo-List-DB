@@ -30,12 +30,12 @@ async function onTaskUpdated(task) {
 
 async function onNewTaskRequested() {
     let task = await databaseConnector.createTask();
-    task.addEventListener("update", onTaskUpdated);
+    task.addEventListener("update", (event) => onTaskUpdated(event.data));
     taskListView.add(task);
 }
 
 function onTaskCleanupRequested() {
-
+    throw new Error("Not implemented!");
 }
 
 Logger.enable();

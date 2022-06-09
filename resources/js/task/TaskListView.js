@@ -9,7 +9,7 @@ class TaskListView extends Observable {
         super();
         this.el = el;
         this.el.querySelector(".button.new-task").addEventListener("click", () => this.onNewTaskButtonClicked());
-        this.el.querySelector(".button.clear-list").addEventListener("click", () => this.onClearListButtonClicked());
+        this.el.querySelector(".button.clear-list").addEventListener("click", () => this.onClearTasksButtonClicked());
     }
 
     add(task) {
