@@ -1,24 +1,35 @@
-const DEFAULT_TASK_TEXT = "New Task";
+import {Observable, Event } from "../utils/Observable.js";
 
-class Task {
+const DEFAULT_TEXT = "New task";
 
-    constructor(description = DEFAULT_TASK_TEXT, id = Date.now().toString(), completed = false) {
+class Task extends Observable {
+
+    constructor(description = DEFAULT_TEXT, id = Date.now().toString(), status = Task.OPEN) {
+        super();
         this.description = description;
         this.id = id;
-        this.completed = completed;
+        this.status = status;
     }
 
-    setDescription(description) {
+    set updateDescription(description) {
         this.description = description;
+        this.notifyAll(new Event("update", this));
     }
 
     toggleStatus() {
-        this.completed = !this.completed;
-        return this.completed;
+        if(this.status === Task.OPEN) {
+            this.status = Task.CLOSED;
+        } else {
+            this.status = Task.OPEN;
+        }
+        this.notifyAll(new Event("update", this));
     }
 
+    static OPEN = "Task.Open";
+    static CLOSED = "Task.Closed";
+
     static fromObject(obj) {
-        return new Task(obj.description, obj.id, obj.completed);
+        return new Task(obj.description, obj.id, obj.status);
     }
 
 }

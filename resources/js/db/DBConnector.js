@@ -19,24 +19,23 @@ class DBConnector {
         this.db = getProvider(strategy);
     }
 
-    open() {
+    async open() {
         return this.db.open();
     }
 
-    createTask() {
-        let newTask = new Task();
-        return this.db.createTask(newTask);
+    async createTask() {
+        return this.db.createTask();
     }
 
-    getTasks() {
+    async getTasks() {
         return this.db.getTasks();
     }
 
-    updateTask(task) {
+    async updateTask(task) {
         return this.db.updateTask(task);
     }
 
-    removeTask(task) {
+    async removeTask(task) {
         return this.db.removeTask(task);
     }
 

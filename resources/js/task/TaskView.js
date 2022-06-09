@@ -1,81 +1,80 @@
-import { Event, Observable } from "../utils/Observable.js";
+import Task from "./Task.js";
 
 const TASK_VIEW_TEMPLATE_STRING = document.querySelector("#task-template").innerHTML
     .trim();
 
-function broadCastUpdateEvent(context) {
-    let event = new Event("taskViewStatusChange", context.task);
-    context.notifyAll(event);
+function createTaskElementForView(view) {
+    let el = document.createElement("div");
+    el.innerHTML = TASK_VIEW_TEMPLATE_STRING;
+    el.querySelector(".task-status-checkbox").addEventListener("change", view.onCheckboxStatusChanged.bind(view));
+    el.querySelector(".task-text-input").addEventListener("keypress", view.onKeyPressed.bind(view));
+    el.querySelector(".task-text-input").addEventListener("focus", view.onTextFocusChanged.bind(view));
+    el.querySelector(".task-text-input").addEventListener("blur", view.onTextFocusChanged.bind(view));
+    return el.firstChild;
 }
 
-class TaskView extends Observable {
+class TaskView {
 
-    constructor(task) {
-        super();
+    constructor() {
+        this.el = createTaskElementForView(this);
+    }
+
+    appendTo(parent) {
+        parent.append(this.el);
+    }
+
+    remove() {
+        this.task = undefined;
+        this.el.remove();
+    }
+
+    bind(task) {
         this.task = task;
-        this.el = TaskView.createTaskElement();
+        this.task.addEventListener("update", (event) => this.render(event.data));
+        this.render(this.task);
+    }
+
+    holds(task) {
+        return this.el.getAttribute("data-id") === task.id;
+    }
+
+    focus() {
+        this.el.querySelector(".task-text-input").focus();
+        this.el.querySelector(".task-text-input").select();
+    }
+
+    render() {
         this.el.setAttribute("data-id", this.task.id);
-        this.statusCheckbox = this.el.querySelector(".task-status-checkbox");
-        this.statusCheckbox.checked = this.task.completed;
-        this.statusCheckbox.addEventListener("change", this.onCheckboxStatusChanged
-            .bind(this));
-        this.textInput = this.el.querySelector(".task-text-input");
-        this.textInput.value = this.task.description;
-        this.textInput.addEventListener("input", this.onTextContentChanged.bind(
-            this));
-        this.textInput.addEventListener("keypress", this.onKeyPressed.bind(this));
-        this.textInput.addEventListener("focus", this.onTextFocusChanged.bind(
-            this));
-        this.textInput.addEventListener("blur", this.onTextFocusChanged.bind(this));
-    }
-
-    getElement() {
-        return this.el;
-    }
-
-    removeElement() {
-        this.el.parentElement.removeChild(this.el);
-    }
-
-    getTask() {
-        return this.task;
-    }
-
-    isMarkedAsCompleted() {
-        return this.el.classList.contains("finished");
+        this.el.querySelector(".task-text-input").value = this.task.description;
+        // TODO Think about switching condition to check for OPEN tasks first
+        if (this.task.status === Task.CLOSED) {
+            this.el.classList.add("closed");
+            this.el.querySelector(".task-status-checkbox").checked = true;
+            this.el.querySelector(".task-text-input").disabled = true;
+        } else {
+            this.el.classList.remove("closed");
+            this.el.querySelector(".task-status-checkbox").checked = false;
+            this.el.querySelector(".task-text-input").disabled = false;
+        }
     }
 
     onCheckboxStatusChanged() {
-        this.task.toggleStatus();
-        this.el.classList.toggle("finished");
-        this.textInput.disabled = !this.textInput.disabled;
-        broadCastUpdateEvent(this);
-    }
-
-    onTextContentChanged(event) {
-        this.task.setDescription(event.target.value);
-        broadCastUpdateEvent(this);
+        if (this.task) {
+            this.task.toggleStatus();
+        }
     }
 
     onKeyPressed(event) {
         if (event.key === "Enter") {
-            this.textInput.blur();
+            this.el.querySelector(".task-text-input").blur();
+            if (this.task) {
+                this.task.updateDescription(event.target.value);
+            }
         }
     }
 
     onTextFocusChanged() {
         this.el.classList.toggle("edit");
-    }
-
-    focus() {
-        this.textInput.focus();
-        this.textInput.select();
-    }
-
-    static createTaskElement() {
-        let el = document.createElement("div");
-        el.innerHTML = TASK_VIEW_TEMPLATE_STRING;
-        return el.firstChild;
     }
 
 }

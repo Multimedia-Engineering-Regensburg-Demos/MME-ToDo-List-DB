@@ -75,7 +75,7 @@ function updateTaskInDatabase(task) {
         request.onsuccess = function(event) {
             let updateRequest, dbTask = event.target.result;
             dbTask.description = task.description;
-            dbTask.completed = task.completed;
+            dbTask.status = task.status;
             updateRequest = objectStore.put(dbTask);
             updateRequest.onerror = callErrorCallback.bind(null,
                 "Could not update task in database", reject);

@@ -82,7 +82,7 @@ html, body {
 	background-color: #ebf3f9;
 }
 
-.task.finished {
+.task.closed {
 	opacity: 0.5;
 }
 
