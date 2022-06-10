@@ -1,4 +1,4 @@
-import {Observable, Event } from "../utils/Observable.js";
+import { Observable, Event } from "/resources/js/utils/Observable.js";
 
 const DEFAULT_TEXT = "New task";
 
@@ -11,13 +11,13 @@ class Task extends Observable {
         this.status = status;
     }
 
-    set updateDescription(description) {
+    updateDescription(description) {
         this.description = description;
         this.notifyAll(new Event("update", this));
     }
 
     toggleStatus() {
-        if(this.status === Task.OPEN) {
+        if (this.status === Task.OPEN) {
             this.status = Task.CLOSED;
         } else {
             this.status = Task.OPEN;

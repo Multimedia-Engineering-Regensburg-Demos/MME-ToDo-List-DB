@@ -1,7 +1,7 @@
-import Logger from "../utils/Logger.js";
-import Task from "../task/Task.js";
-import Config from "./DBConfig.js";
-import DBProvider from "./DBProvider.js";
+import Logger from "/resources/js/utils/Logger.js";
+import Task from "/resources/js/task/Task.js";
+import Config from "/resources/js/db/DBConfig.js";
+import DBProvider from "/resources/js/db/providers/DBProvider.js";
 
 let liveData = [];
 

@@ -1,7 +1,6 @@
-import Task from "./Task.js";
+import Task from "/resources/js/task/Task.js";
 
-const TASK_VIEW_TEMPLATE_STRING = document.querySelector("#task-template").innerHTML
-    .trim();
+const TASK_VIEW_TEMPLATE_STRING = document.querySelector("#task-template").innerHTML.trim();
 
 function createTaskElementForView(view) {
     let el = document.createElement("div");
@@ -34,8 +33,12 @@ class TaskView {
         this.render(this.task);
     }
 
-    holds(task) {
+    isBoundTo(task) {
         return this.el.getAttribute("data-id") === task.id;
+    }
+
+    isBoundToCompletedTask() {
+        return this.task.status === Task.CLOSED;
     }
 
     focus() {
@@ -46,15 +49,14 @@ class TaskView {
     render() {
         this.el.setAttribute("data-id", this.task.id);
         this.el.querySelector(".task-text-input").value = this.task.description;
-        // TODO Think about switching condition to check for OPEN tasks first
-        if (this.task.status === Task.CLOSED) {
-            this.el.classList.add("closed");
-            this.el.querySelector(".task-status-checkbox").checked = true;
-            this.el.querySelector(".task-text-input").disabled = true;
-        } else {
+        if (this.task.status === Task.OPEN) {
             this.el.classList.remove("closed");
             this.el.querySelector(".task-status-checkbox").checked = false;
-            this.el.querySelector(".task-text-input").disabled = false;
+            this.el.querySelector(".task-text-input").disabled = false;;
+        } else {
+            this.el.classList.add("closed");
+            this.el.querySelector(".task-status-checkbox").checked = true;
+            this.el.querySelector(".task-text-input").disabled = true
         }
     }
 
@@ -65,7 +67,7 @@ class TaskView {
     }
 
     onKeyPressed(event) {
-        if (event.key === "Enter") {
+        if (event.code === "Enter") {
             this.el.querySelector(".task-text-input").blur();
             if (this.task) {
                 this.task.updateDescription(event.target.value);
@@ -73,8 +75,11 @@ class TaskView {
         }
     }
 
-    onTextFocusChanged() {
+    onTextFocusChanged(event) {
         this.el.classList.toggle("edit");
+        if (this.task) {
+            this.task.updateDescription(event.target.value);
+        }
     }
 
 }

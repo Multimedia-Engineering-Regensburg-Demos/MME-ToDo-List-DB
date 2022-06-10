@@ -1,6 +1,6 @@
-import TaskListView from "./task/TaskListView.js";
-import DBConnector from "./db/DBConnector.js";
-import Logger from "./utils/Logger.js";
+import TaskListView from "/resources/js/ui/TaskListView.js";
+import DBConnector from "/resources/js/db/DBConnector.js";
+import Logger from "/resources/js/utils/Logger.js";
 
 var databaseConnector,
     taskListView;
@@ -12,7 +12,7 @@ async function initDatabase(strategy) {
 }
 
 async function initUserInterface() {
-    let tasks = await databaseConnector.getTasks();
+    let tasks = await databaseConnector.getAllTasks();
     taskListView = new TaskListView(document.querySelector("#tasks"));
     taskListView.addEventListener("newTaskRequested", onNewTaskRequested);
     taskListView.addEventListener("taskCleanupRequested", onTaskCleanupRequested);
@@ -34,8 +34,11 @@ async function onNewTaskRequested() {
     taskListView.add(task);
 }
 
-function onTaskCleanupRequested() {
-    throw new Error("Not implemented!");
+async function onTaskCleanupRequested(event) {
+    for (let i = 0; i < event.data.length; i++) {
+        await databaseConnector.removeTask(event.data[i]);
+        taskListView.remove(event.data[i]);
+    }
 }
 
 Logger.enable();

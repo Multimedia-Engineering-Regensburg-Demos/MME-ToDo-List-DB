@@ -1,5 +1,5 @@
-import TaskView from "./TaskView.js";
-import { Event, Observable } from "../utils/Observable.js";
+import { Event, Observable } from "/resources/js/utils/Observable.js";
+import TaskView from "/resources/js/ui/TaskView.js";
 
 const taskViews = [];
 
@@ -8,8 +8,8 @@ class TaskListView extends Observable {
     constructor(el) {
         super();
         this.el = el;
-        this.el.querySelector(".button.new-task").addEventListener("click", () => this.onNewTaskButtonClicked());
-        this.el.querySelector(".button.clear-list").addEventListener("click", () => this.onClearTasksButtonClicked());
+        this.el.querySelector(".new-task").addEventListener("click", () => this.onNewTaskButtonClicked());
+        this.el.querySelector(".clear-list").addEventListener("click", () => this.onClearTasksButtonClicked());
     }
 
     add(task) {
@@ -20,12 +20,12 @@ class TaskListView extends Observable {
     }
 
     update(task) {
-        let taskView = taskViews.find((view) => view.holds(task));
+        let taskView = taskViews.find((view) => view.isBoundTo(task));
         taskView.render();
     }
 
     remove(task) {
-        let taskViewIndex = taskViews.findIndex((view) => view.holds(task));
+        let taskViewIndex = taskViews.findIndex((view) => view.isBoundTo(task));
         if (TaskListView === -1) {
             return;
         }
@@ -38,7 +38,8 @@ class TaskListView extends Observable {
     }
 
     onClearTasksButtonClicked() {
-        this.notifyAll(new Event("taskCleanupRequested"));
+        let completedTasks = taskViews.filter((view) => view.isBoundToCompletedTask()).map((view) => view.task);
+        this.notifyAll(new Event("taskCleanupRequested", completedTasks));
     }
 
 }

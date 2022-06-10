@@ -1,7 +1,7 @@
-import Logger from "../utils/Logger.js";
-import Task from "../task/Task.js";
-import Config from "./DBConfig.js";
-import DBProvider from "./DBProvider.js";
+import Logger from "/resources/js/utils/Logger.js";
+import Task from "/resources/js/task/Task.js";
+import Config from "/resources/js/db/DBConfig.js";
+import DBProvider from "/resources/js/db/providers/DBProvider.js";
 
 var database;
 
@@ -90,12 +90,10 @@ function updateTaskInDatabase(task) {
 
 function removeTaskFromDatabase(task) {
     return new Promise(function(resolve, reject) {
-        let transaction = database.transaction([Config.DB_STORE_KEY],
-                "readwrite"),
+        let transaction = database.transaction([Config.DB_STORE_KEY], "readwrite"),
             objectStore = transaction.objectStore(Config.DB_STORE_KEY),
             request = objectStore.delete(task.id);
-        request.onerror = callErrorCallback.bind(null,
-            "Could not remove task from database", reject);
+        request.onerror = callErrorCallback.bind(null, "Could not remove task from database", reject);
         request.onsuccess = function() {
             Logger.log(`Task ${task.id} removed from DB`);
             resolve(task);

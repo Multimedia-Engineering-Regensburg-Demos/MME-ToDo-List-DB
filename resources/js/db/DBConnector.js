@@ -1,6 +1,5 @@
-import LocalStorageDBProvider from "./LocalStorageDBProvider.js";
-import IndexedDBProvider from "./IndexedDBProvider.js";
-import Task from "../task/Task.js";
+import LocalStorageDBProvider from "/resources/js/db/providers/localstorage/LocalStorageDBProvider.js";
+import IndexedDBProvider from "/resources/js/db/providers/indexeddb/IndexedDBProvider.js";
 
 function getProvider(strategy) {
     switch (strategy) {
@@ -9,7 +8,7 @@ function getProvider(strategy) {
         case DBConnector.INDEXED_DB_STRATEGY:
             return new IndexedDBProvider();
         default:
-            throw new Error("Strategy");
+            throw new Error("Unknown Strategy");
     }
 }
 
@@ -27,7 +26,7 @@ class DBConnector {
         return this.db.createTask();
     }
 
-    async getTasks() {
+    async getAllTasks() {
         return this.db.getTasks();
     }
 
